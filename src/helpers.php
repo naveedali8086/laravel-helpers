@@ -1,62 +1,44 @@
 <?php
 
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Unique;
-
-if (!function_exists('get_all_rules_except_unique_rule')) {
-    /**
-     * Get all rules of a single attribute except unique rule<br>so that it may be overridden
-     *
-     * @param string|array $attributeRules
-     * @return string|array
-     */
-    function get_all_rules_except_unique_rule(string|array $attributeRules): string|array
-    {
-        $attributeRulesInArray = is_string($attributeRules) ? explode('|', $attributeRules) : $attributeRules;
-
-        foreach ($attributeRulesInArray as $index => $rule) {
-            if (
-                (is_string($rule) && Str::startsWith($rule, 'unique:')) ||
-                $rule instanceof Unique
-            ) {
-                unset($attributeRulesInArray[$index]);
-                break;
-            }
-        }
-
-        $attributeRulesInArray = array_values($attributeRulesInArray);
-
-        return is_string($attributeRules) ?
-            implode('|', $attributeRulesInArray) :
-            $attributeRulesInArray;
-    }
-
-}
 
 if (!function_exists('remove_rule')) {
+
     /**
      * Remove/unset a rule(s) from an attribute
      *
-     * @param string|array $attributeRules
-     * @param array $rulesToRemove
-     * @return string|array
+     * @param string|array $attributeRules The validation rules (string format: 'required|email' or array format: ['required', 'email'])
+     * @param array $rulesToRemove Array of rule names to remove (e.g., ['unique', 'email'])
+     * @return string|array Returns the same format as input (string or array) with specified rules removed
      */
     function remove_rule(string|array $attributeRules, array $rulesToRemove): string|array
     {
+        // Convert string rules to array format for easier processing
         $attributeRulesInArray = is_string($attributeRules) ? explode('|', $attributeRules) : $attributeRules;
 
+        // Loop through each rule to check if it should be removed
         foreach ($attributeRulesInArray as $index => $rule) {
 
-            $rule = is_object($rule) ? Str::snake(class_basename($rule)) : $rule;
+            // Convert object rules (e.g., new Unique()) to their string representation
+            $ruleString = is_object($rule) ? Str::snake(class_basename($rule)) : $rule;
 
+            // Check against each rule that should be removed
             foreach ($rulesToRemove as $ruleToRemove) {
-                if (Str::startsWith($rule, $ruleToRemove)) {
-                    unset($attributeRules[$index]);
+                if (Str::startsWith($ruleString, $ruleToRemove)) {
+                    unset($attributeRulesInArray[$index]);
+                    // No need to check remaining elements of '$rulesToRemove' as required rule already removed from it
+                    break;
                 }
-                return array_values($attributeRules);
             }
         }
-        return [];
+
+        // Re-index array to remove gaps in keys
+        $attributeRulesInArray = array_values($attributeRulesInArray);
+
+        // Return in the same format as input (string or array)
+        return is_string($attributeRules) ?
+            implode('|', $attributeRulesInArray) :
+            $attributeRulesInArray;
     }
 
 }
