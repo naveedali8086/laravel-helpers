@@ -1,7 +1,7 @@
 
 <?php
 
-namespace Naveedali8086\LaravelHelpers\Tests;
+namespace Naveedali8086\LaravelHelpers\Tests\Unit;
 
 use Illuminate\Validation\Rules\Unique;
 use PHPUnit\Framework\TestCase;
