@@ -1,4 +1,3 @@
-
 <?php
 
 namespace Naveedali8086\LaravelHelpers\Tests\Unit;
@@ -187,7 +186,7 @@ class HelpersTest extends TestCase
         $rules = ['required', 'email', 'unique:users'];
         $result = remove_rule($rules, ['email']);
         
-        // Should return properly re-indexed array [0, 1] not [0, 2]
+        // Should return a properly re-indexed array [0, 1] not [0, 2]
         $this->assertArrayHasKey(0, $result);
         $this->assertArrayHasKey(1, $result);
         $this->assertArrayNotHasKey(2, $result);
