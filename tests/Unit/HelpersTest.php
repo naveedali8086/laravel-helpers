@@ -3,11 +3,12 @@
 namespace Naveedali8086\LaravelHelpers\Tests\Unit;
 
 use Illuminate\Validation\Rules\Unique;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class HelpersTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_removes_single_rule_from_string_format()
     {
         $rules = 'required|email|unique:users|max:255';
@@ -16,7 +17,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email|max:255', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_multiple_rules_from_string_format()
     {
         $rules = 'required|email|unique:users|max:255|min:3';
@@ -25,7 +26,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email|max:255', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_single_rule_from_array_format()
     {
         $rules = ['required', 'email', 'unique:users', 'max:255'];
@@ -34,7 +35,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(['required', 'email', 'max:255'], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_multiple_rules_from_array_format()
     {
         $rules = ['required', 'email', 'unique:users', 'max:255', 'min:3'];
@@ -43,7 +44,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(['required', 'email', 'max:255'], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_rule_with_parameters()
     {
         $rules = 'required|unique:users,email,1|max:255';
@@ -52,7 +53,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|max:255', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_object_rules()
     {
         $rules = ['required', new Unique('users', 'email'), 'max:255'];
@@ -63,7 +64,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('max:255', $result[1]);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_empty_string_when_all_rules_removed_from_string()
     {
         $rules = 'required|email';
@@ -72,7 +73,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_empty_array_when_all_rules_removed_from_array()
     {
         $rules = ['required', 'email'];
@@ -81,7 +82,7 @@ class HelpersTest extends TestCase
         $this->assertEquals([], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_original_string_when_no_matching_rules()
     {
         $rules = 'required|email|max:255';
@@ -90,7 +91,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email|max:255', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_original_array_when_no_matching_rules()
     {
         $rules = ['required', 'email', 'max:255'];
@@ -99,7 +100,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(['required', 'email', 'max:255'], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_empty_rules_to_remove()
     {
         $rules = 'required|email|max:255';
@@ -108,7 +109,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email|max:255', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_empty_rules_string()
     {
         $rules = '';
@@ -117,7 +118,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_empty_rules_array()
     {
         $rules = [];
@@ -126,7 +127,7 @@ class HelpersTest extends TestCase
         $this->assertEquals([], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_rules_case_insensitively_matching_start()
     {
         $rules = 'required|email|max:255';
@@ -135,7 +136,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_preserves_order_of_remaining_rules()
     {
         $rules = ['required', 'email', 'unique:users', 'max:255', 'min:3', 'confirmed'];
@@ -144,7 +145,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(['required', 'email', 'max:255', 'confirmed'], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_nullable_rule()
     {
         $rules = 'nullable|sometimes|email';
@@ -153,7 +154,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('sometimes|email', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_sometimes_rule()
     {
         $rules = ['sometimes', 'required', 'email'];
@@ -162,7 +163,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(['required', 'email'], $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_complex_validation_rules()
     {
         $rules = 'required|regex:/^[a-z]+$/|unique:users,username,1,id|between:3,20';
@@ -171,7 +172,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|between:3,20', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_in_rule_with_multiple_values()
     {
         $rules = 'required|in:admin,user,moderator|email';
@@ -180,7 +181,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('required|email', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_maintains_array_index_integrity()
     {
         $rules = ['required', 'email', 'unique:users'];
@@ -192,7 +193,7 @@ class HelpersTest extends TestCase
         $this->assertArrayNotHasKey(2, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_mixed_rule_formats_in_array()
     {
         $rules = ['required', 'email', new Unique('users'), 'max:255', 'min:3'];
