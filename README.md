@@ -8,8 +8,8 @@ A collection of helpful Laravel utilities including validation rules, helper fun
 
 ## Requirements
 
-- PHP 8.0 or higher
-- Laravel 10.x, 11.x, or 12.x
+- PHP 8.2 or higher
+- Laravel 11.x, or 12.x
 
 ## Installation
 

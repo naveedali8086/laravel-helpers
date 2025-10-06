@@ -94,5 +94,5 @@ $result = remove_rule('required|email', ['required', 'email']);
 
 
 ### See Also
-[Usage Examples - Real-world scenarios](docs/usage-examples.md)
+[Usage Examples - Real-world scenarios](usage-examples.md)
 
