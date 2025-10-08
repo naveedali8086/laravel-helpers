@@ -34,8 +34,20 @@ Remove unwanted rules from existing validation rule sets:
 // String
 format $rules = remove_rule('required|email|unique:users', ['unique']); // Result: 'required|email'
 
+
+
 // Array
 format $rules = remove_rule(['required', 'email', 'unique:users'], ['unique']); // Result: ['required', 'email']
+
+
+// override single attribute rules
+$rules = [
+    'name' => ['required', 'string', 'max:255'],
+    // other fields...
+]
+
+$updated_rules['name'] = remove_rule($rules, ['max:255']); // Result: ['required', 'email']
+// override validation rules for all required fields
 ```
 
 
